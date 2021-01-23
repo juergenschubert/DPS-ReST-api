@@ -1,0 +1,2778 @@
+{
+	"info": {
+		"_postman_id": "4cb44d39-4323-45b0-937d-ea5d1adac13f",
+		"name": "DDMC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Authorization",
+			"item": [
+				{
+					"name": "Login user/Password - return X-DD-AUTH-TOKEN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e95af83d-ef59-4adb-9f73-65f18d1aebac",
+								"exec": [
+									"tests[\"response code is 201\"] = responseCode.code === 201;\r",
+									"\r",
+									"//console.log(\"Comming form Tests scripting\")\r",
+									"//console.log(\"The whole response body:...\" +responseBody)\r",
+									"\r",
+									"pm.environment.set(\"X-DD-AUTH-TOKEN\",postman.getResponseHeader(\"X-DD-AUTH-TOKEN\") );\r",
+									"\r",
+									"pm.environment.set(\"X-DD-UUID\",postman.getResponseHeader(\"X-DD-UUID\") );"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"sysadmin\", \"password\":\"Password123!\"}"
+						},
+						"url": {
+							"raw": "https://{{DDMC}}:3009/rest/v1.0/auth",
+							"protocol": "https",
+							"host": [
+								"{{DDMC}}"
+							],
+							"port": "3009",
+							"path": [
+								"rest",
+								"v1.0",
+								"auth"
+							]
+						},
+						"description": "PLease take the X-DD-AUTH-TOKEN valuate and add this to the COLLECTION variable X-DD-AUTH-TOKEN as this will used everywhere here for aurhorization"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-DD-AUTH-TOKEN",
+								"value": "{{X-DD-AUTH-TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{DDMC}}:3009/rest/v1.0/auth",
+							"protocol": "https",
+							"host": [
+								"{{DDMC}}"
+							],
+							"port": "3009",
+							"path": [
+								"rest",
+								"v1.0",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2ec2fb7-be7f-4ea2-be69-ea5853513bcc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc9f96d3-4c3e-4d8c-825b-29b3db6bf84b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "DDMC 7.3 - config templates",
+			"item": [
+				{
+					"name": "#ppt",
+					"item": [
+						{
+							"name": "17 page",
+							"item": [
+								{
+									"name": "Create an Config Template",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"name\":\"admin-access\",\"hostname\":\"bdff321f54fbbc8:ab8f234bce6040dd\",\"features\": [\r\n\"adminaccess\", \"ntp\",\"config\",\"net\" ],\"description\":\"rest API admin-access\"}\r\n\r\n\r\n\r\n            "
+										},
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"system",
+												"config",
+												"templates"
+											]
+										},
+										"description": "Create an Config Template."
+									},
+									"response": []
+								},
+								{
+									"name": "Create an Config Template subfeature",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"name\":\"adminaccess-ssh\",\"hostname\":\"ddve-1.vlab.local\",\r\n \"features\":[\"adminaccess:ssh\"\r\n  ], \r\n  \"description\":\"Rest API - SHH from ddve-1.vlab.loca\"\r\n}"
+										},
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"system",
+												"config",
+												"templates"
+											]
+										},
+										"description": "Create an Config Template."
+									},
+									"response": []
+								},
+								{
+									"name": "Get the list of features",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											},
+											{
+												"key": "content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/templates/features",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"templates",
+												"features"
+											]
+										},
+										"description": "Get the list of features"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "18 page",
+							"item": [
+								{
+									"name": "Get the list of features",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											},
+											{
+												"key": "content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/templates/features",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"templates",
+												"features"
+											]
+										},
+										"description": "Get the list of features"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "19 page",
+							"item": [
+								{
+									"name": "Get Config for a special Template",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates/{{template-ID}}",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"system",
+												"config",
+												"templates",
+												"{{template-ID}}"
+											],
+											"query": [
+												{
+													"key": "include_fields",
+													"value": "VAR-include_fields",
+													"disabled": true
+												},
+												{
+													"key": "exclude_fields",
+													"value": "VAR-exclude_fields",
+													"disabled": true
+												}
+											]
+										},
+										"description": "Get Config Template information."
+									},
+									"response": []
+								},
+								{
+									"name": "List of all config templates",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"system",
+												"config",
+												"templates"
+											],
+											"query": [
+												{
+													"key": "include_fields",
+													"value": "VAR-include_fields",
+													"disabled": true
+												},
+												{
+													"key": "exclude_fields",
+													"value": "VAR-exclude_fields",
+													"disabled": true
+												}
+											]
+										},
+										"description": "Get Config Template information."
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "20 page",
+							"item": [
+								{
+									"name": "Run Config Template Apply",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"systemIds\":[\"cf11b1cda3b9e3ed:94740adcaa114eee\"]}"
+										},
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/templates/{{template-ID}}/apply",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"templates",
+												"{{template-ID}}",
+												"apply"
+											]
+										},
+										"description": "Run Config Template Apply"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "21 page",
+							"item": [
+								{
+									"name": "Get tasks information",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"type": "text",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/tasks/1000164",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"tasks",
+												"1000164"
+											]
+										},
+										"description": "Get tasks information."
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "24 page",
+							"item": [
+								{
+									"name": "Run Config Template Audit",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"configTemplateId\":\"{{template-ID}}\",\r\n  \"systemIds\": [\r\n        \"cf11b1cda3b9e3ed:94740adcaa114eee\"\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"template-audits"
+											]
+										},
+										"description": "Run Config Template Audit"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "25 page",
+							"item": [
+								{
+									"name": "Get tasks information - response header location",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/tasks/939086",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"tasks",
+												"939086"
+											]
+										},
+										"description": "Get tasks information."
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "26 page",
+							"item": [
+								{
+									"name": "Get tasks information - response header location",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/tasks/939086",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"tasks",
+												"939086"
+											]
+										},
+										"description": "Get tasks information."
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "27 page",
+							"item": [
+								{
+									"name": "Get a Config Template Audit Result",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/{{template-audit-ID}}",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"template-audits",
+												"{{template-audit-ID}}"
+											]
+										},
+										"description": "Get a Config Template Audit Result"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "28 page",
+							"item": [
+								{
+									"name": "Get a Config Template Audit Result",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/{{template-audit-ID}}",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"template-audits",
+												"{{template-audit-ID}}"
+											]
+										},
+										"description": "Get a Config Template Audit Result"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "30 page",
+							"item": [
+								{
+									"name": "Get config template audit history",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/histories",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"template-audits",
+												"histories"
+											]
+										},
+										"description": "Get config template audit history"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "32 page",
+							"item": [
+								{
+									"name": "Get Config Template information",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "authorization",
+												"value": "VAR-Authorization",
+												"disabled": true
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates?include_fields=hostname, id",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"system",
+												"config",
+												"templates"
+											],
+											"query": [
+												{
+													"key": "include_fields",
+													"value": "hostname, id"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "name,version",
+													"disabled": true
+												}
+											]
+										},
+										"description": "Get Config Template information."
+									},
+									"response": []
+								},
+								{
+									"name": "Get list of PowerProtect DD systems",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/rest/v1.0/dd-systems",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems"
+											],
+											"query": [
+												{
+													"key": "include_fields",
+													"value": "id, name",
+													"disabled": true
+												},
+												{
+													"key": "exclude_fields",
+													"value": "name",
+													"disabled": true
+												}
+											]
+										},
+										"description": "Get list of PowerProtect DD systems"
+									},
+									"response": []
+								},
+								{
+									"name": "Create a Config Template Audit Schedule",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"systemIds\": [\r\n    \"cf11b1cda3b9e3ed:94740adcaa114eee\"\r\n    ],\r\n  \"configTemplateId\": \"adminaccess-ssh\",\r\n  \"scheduleFrequency\": \"DAILY\",\r\n  \"scheduleName\": \"MySchedule\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"template-audits",
+												"schedules"
+											]
+										},
+										"description": "Create a Config Template Audit Schedule"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "33 page",
+							"item": [
+								{
+									"name": "List Config Template Audit Schedules",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											},
+											{
+												"key": "content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"template-audits",
+												"schedules"
+											]
+										},
+										"description": "List Config Template Audit Schedules"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "34 page",
+							"item": [
+								{
+									"name": "Create a Config Template Audit Schedule Copy",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"systemIds\": [\r\n    \"cf11b1cda3b9e3ed:94740adcaa114eee\"\r\n    ],\r\n  \"configTemplateId\": \"adminaccess-ssh\",\r\n  \"scheduleFrequency\": \"DAILY\",\r\n  \"scheduleName\": \"MySchedule\"\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"template-audits",
+												"schedules"
+											]
+										},
+										"description": "Create a Config Template Audit Schedule"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "35 page",
+							"item": [
+								{
+									"name": "Delete Config Template Audit Schedule",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "x-dd-auth-token",
+												"value": "{{X-DD-AUTH-TOKEN}}"
+											}
+										],
+										"url": {
+											"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules/2",
+											"protocol": "https",
+											"host": [
+												"{{DDMC}}"
+											],
+											"port": "3009",
+											"path": [
+												"api",
+												"v1",
+												"system",
+												"config",
+												"template-audits",
+												"schedules",
+												"2"
+											]
+										},
+										"description": "Delete Config Template Audit Schedule"
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "#workflow",
+					"item": [
+						{
+							"name": "Login user/Password - return X-DD-AUTH-TOKEN",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eac43ec1-ecc8-496b-ac3d-3443caa47cd9",
+										"exec": [
+											"tests[\"response code is 201\"] = responseCode.code === 201;\r",
+											"\r",
+											"//console.log(\"Comming form Tests scripting\")\r",
+											"//console.log(\"The whole response body:...\" +responseBody)\r",
+											"\r",
+											"pm.environment.set(\"X-DD-AUTH-TOKEN\",postman.getResponseHeader(\"X-DD-AUTH-TOKEN\") );\r",
+											"\r",
+											"pm.environment.set(\"X-DD-UUID\",postman.getResponseHeader(\"X-DD-UUID\") );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\":\"sysadmin\", \"password\":\"Password123!\"}"
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/auth",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"auth"
+									]
+								},
+								"description": "PLease take the X-DD-AUTH-TOKEN valuate and add this to the COLLECTION variable X-DD-AUTH-TOKEN as this will used everywhere here for aurhorization"
+							},
+							"response": []
+						},
+						{
+							"name": "Get the list of features",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/templates/features",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"templates",
+										"features"
+									]
+								},
+								"description": "Get the list of features"
+							},
+							"response": []
+						},
+						{
+							"name": "Get list of PowerProtect DD systems",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/dd-systems?include_fields=id, name",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"dd-systems"
+									],
+									"query": [
+										{
+											"key": "include_fields",
+											"value": "id, name"
+										},
+										{
+											"key": "exclude_fields",
+											"value": "name",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Get list of PowerProtect DD systems"
+							},
+							"response": []
+						},
+						{
+							"name": "Create an Config Template ALL",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\":\"ALL-ddve-1\",\"hostname\":\"ddve-1.vlab.local\",\"features\": [\r\n    \"ALL\"\r\n     ],\r\n     \"description\":\"Config template comming from Rest api\"}          "
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates"
+									]
+								},
+								"description": "Create an Config Template."
+							},
+							"response": []
+						},
+						{
+							"name": "Create an Config Template Support",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\":\"support-only\",\"hostname\":\"ddve-1.vlab.local\",\"features\": [\r\n    \"support\"\r\n     ],\r\n     \"description\":\"Config template comming from Rest api\"}          "
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates"
+									]
+								},
+								"description": "Create an Config Template."
+							},
+							"response": []
+						},
+						{
+							"name": "Create an Config Template subfeature adminaccess:ssh",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\":\"adminaccess-ssh\",\"hostname\":\"bdff321f54fbbc8:ab8f234bce6040dd\",\r\n \"features\":[\"adminaccess:ssh\"\r\n  ], \r\n  \"description\":\"Config template comming from Rest api\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates"
+									]
+								},
+								"description": "Create an Config Template."
+							},
+							"response": []
+						},
+						{
+							"name": "List of all config templates",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates"
+									],
+									"query": [
+										{
+											"key": "include_fields",
+											"value": "VAR-include_fields",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "VAR-exclude_fields",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Get Config Template information."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Config for a special Template",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates/:template-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates",
+										":template-ID"
+									],
+									"query": [
+										{
+											"key": "include_fields",
+											"value": "VAR-include_fields",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "VAR-exclude_fields",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "template-ID",
+											"value": ""
+										}
+									]
+								},
+								"description": "Get Config Template information."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Config for a special Template",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates/:template-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates",
+										":template-ID"
+									],
+									"query": [
+										{
+											"key": "include_fields",
+											"value": "VAR-include_fields",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "VAR-exclude_fields",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "template-ID",
+											"value": "admin-option-access",
+											"description": "special template ID/name"
+										}
+									]
+								},
+								"description": "Get Config Template information."
+							},
+							"response": []
+						},
+						{
+							"name": "Run Config Template Audit",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"configTemplateId\": \"adminaccess-ssh\",\r\n  \"systemIds\": [\r\n    \"ddve-2.vlab.local\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits"
+									]
+								},
+								"description": "Run Config Template Audit"
+							},
+							"response": []
+						},
+						{
+							"name": "Get tasks information",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"type": "text",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/tasks/:taks-id",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"tasks",
+										":taks-id"
+									],
+									"variable": [
+										{
+											"key": "taks-id",
+											"value": "943747",
+											"description": "special task ID to look at"
+										}
+									]
+								},
+								"description": "Get tasks information."
+							},
+							"response": []
+						},
+						{
+							"name": "Get tasks information from response header",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/:tempalte-audit-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										":tempalte-audit-ID"
+									],
+									"variable": [
+										{
+											"key": "tempalte-audit-ID",
+											"value": "5"
+										}
+									]
+								},
+								"description": "Get tasks information."
+							},
+							"response": []
+						},
+						{
+							"name": "Run Config Template Apply",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"systemIds\":[\"cf11b1cda3b9e3ed%3A94740adcaa114eee\"]}"
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/templates/:tempalte-id/apply",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"templates",
+										":tempalte-id",
+										"apply"
+									],
+									"variable": [
+										{
+											"key": "tempalte-id",
+											"value": "admin-option-access"
+										}
+									]
+								},
+								"description": "Run Config Template Apply"
+							},
+							"response": []
+						},
+						{
+							"name": "List Config Template Audit Schedules",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										"schedules"
+									]
+								},
+								"description": "List Config Template Audit Schedules"
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Config Template Audit Schedule",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"systemIds\": [ \r\n  \"ddve-2.vlab.local\" \r\n  ],\r\n  \"configTemplateId\": \"admin-option-access\",\r\n  \"scheduleFrequency\": \"DAILY\",\r\n  \"scheduleName\": \"MySchedule\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										"schedules"
+									]
+								},
+								"description": "Create a Config Template Audit Schedule"
+							},
+							"response": []
+						},
+						{
+							"name": "Get config template audit history",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/histories",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										"histories"
+									]
+								},
+								"description": "Get config template audit history"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Config Template",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates/:template-id",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates",
+										":template-id"
+									],
+									"variable": [
+										{
+											"key": "template-id",
+											"value": "adminaccess-ssh"
+										}
+									]
+								},
+								"description": "Delete a Config Template."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Sites",
+					"item": [
+						{
+							"name": "Get a list of Federation Sites",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/sites",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"sites"
+									]
+								},
+								"description": "Get a list of Federation Sites and their details."
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Federation Site",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\":\"Test Fed Site\",\"description\":\"created Test federation site\"}"
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/sites",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"sites"
+									]
+								},
+								"description": "Create a Federation Site."
+							},
+							"response": []
+						},
+						{
+							"name": "Get details of a Federation Site",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/sites/:FED-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"sites",
+										":FED-ID"
+									],
+									"variable": [
+										{
+											"key": "FED-ID",
+											"value": "",
+											"description": "Federation ID"
+										}
+									]
+								},
+								"description": "Get details of a Federation Site."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Config Template Audit",
+					"item": [
+						{
+							"name": "Run Config Template Audit",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"configTemplateId\": \"ddmc-adminaccess\",\r\n  \"systemIds\": [\r\n    \"cf11b1cda3b9e3ed%3A94740adcaa114eee\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits"
+									]
+								},
+								"description": "Run Config Template Audit"
+							},
+							"response": []
+						},
+						{
+							"name": "Get a Config Template Audit Result",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/:template-audit-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										":template-audit-ID"
+									],
+									"variable": [
+										{
+											"key": "template-audit-ID",
+											"value": "<string>",
+											"description": "teplate audit ID"
+										}
+									]
+								},
+								"description": "Get a Config Template Audit Result"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Config Template Audit History",
+					"item": [
+						{
+							"name": "Get config template audit history",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/histories",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										"histories"
+									]
+								},
+								"description": "Get config template audit history"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Config Template Audit Schedule",
+					"item": [
+						{
+							"name": "List Config Template Audit Schedules",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										"schedules"
+									]
+								},
+								"description": "List Config Template Audit Schedules"
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Config Template Audit Schedule",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"systemIds\": [\r\n    \"cf11b1cda3b9e3ed:94740adcaa114eee\"\r\n    ],\r\n  \"configTemplateId\": \"ddmc-adminaccess\",\r\n  \"scheduleFrequency\": \"DAILY\",\r\n  \"scheduleName\": \"MySchedule\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										"schedules"
+									]
+								},
+								"description": "Create a Config Template Audit Schedule"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Config Template Audit Schedule",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/template-audits/schedules/:Template-Audit-Schedule-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										"schedules",
+										":Template-Audit-Schedule-ID"
+									],
+									"variable": [
+										{
+											"key": "Template-Audit-Schedule-ID",
+											"value": "string",
+											"description": "Schedule ID of a template audit"
+										}
+									]
+								},
+								"description": "Delete Config Template Audit Schedule"
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Config Template Audit Schedule",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/text"
+									},
+									{
+										"key": "X-DD-AUTH-TOKEN",
+										"value": "b667a33dc8eda5b55829ea12b00b1a9ec"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"configTemplateAuditScheduleCreate\":{ \"systemIds\":[ \"46eeddc94cdc5fdb:9438526d6e29d1f3\" ], \"configTemplateId\":\"newt\", \"scheduleFrequency\":\"DAILY\", \"scheduleName\":\"test_sche\" } }"
+								},
+								"url": {
+									"raw": "https://10.213.217.8:3009/api/v1/system/config/template-audits/schedules",
+									"protocol": "https",
+									"host": [
+										"10",
+										"213",
+										"217",
+										"8"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"template-audits",
+										"schedules"
+									]
+								},
+								"description": "Create a Config Template Audit Schedule"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Config Template",
+					"item": [
+						{
+							"name": "Get Config Template information",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "VAR-Authorization",
+										"disabled": true
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates?include_fields=hostname, id",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates"
+									],
+									"query": [
+										{
+											"key": "include_fields",
+											"value": "hostname, id"
+										},
+										{
+											"key": "exclude_fields",
+											"value": "name,version",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Get Config Template information."
+							},
+							"response": []
+						},
+						{
+							"name": "Get list of PowerProtect DD systems Copy",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/dd-systems",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"dd-systems"
+									],
+									"query": [
+										{
+											"key": "include_fields",
+											"value": "id, name",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "name",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Get list of PowerProtect DD systems"
+							},
+							"response": []
+						},
+						{
+							"name": "List of all config templates",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates"
+									],
+									"query": [
+										{
+											"key": "include_fields",
+											"value": "VAR-include_fields",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "VAR-exclude_fields",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Get Config Template information."
+							},
+							"response": []
+						},
+						{
+							"name": "Create an Config Template",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\":\"admin-access\",\"hostname\":\"bdff321f54fbbc8%3Aab8f234bce6040dd\",\"features\": [\r\n\"adminaccess\", \"ntp\",\"config\",\"net\" ],\"description\":\"test template\"}\r\n\r\n\r\n\r\n            "
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates"
+									]
+								},
+								"description": "Create an Config Template."
+							},
+							"response": []
+						},
+						{
+							"name": "Create an Config Template subfeature",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\":\"adminaccess-ssh\",\"hostname\":\"bdff321f54fbbc8:ab8f234bce6040dd\",\r\n \"features\":[\"adminaccess:ssh\"\r\n  ], \r\n  \"description\":\"test template\"\r\n}"
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates"
+									]
+								},
+								"description": "Create an Config Template."
+							},
+							"response": []
+						},
+						{
+							"name": "Get Config for a special Template",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates/:template-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates",
+										":template-ID"
+									],
+									"query": [
+										{
+											"key": "include_fields",
+											"value": "VAR-include_fields",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "VAR-exclude_fields",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "template-ID",
+											"value": "String",
+											"description": "template ID for the "
+										}
+									]
+								},
+								"description": "Get Config Template information."
+							},
+							"response": []
+						},
+						{
+							"name": "Modify/Apply a Config Template",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/xml"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"operation\":\"rename\",\"name\":\"string\",\"hostname\":[\"string\"]}",
+									"options": {
+										"raw": {
+											"language": "xml"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates/:template-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates",
+										":template-ID"
+									],
+									"variable": [
+										{
+											"key": "template-ID",
+											"value": "<String>",
+											"type": "text",
+											"enabled": true,
+											"description": " template ID"
+										}
+									]
+								},
+								"description": "Modify/Apply a Config Template."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a Config Template",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/config/templates/:template-ID",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"config",
+										"templates",
+										":template-ID"
+									],
+									"variable": [
+										{
+											"key": "template-ID",
+											"value": "<string>",
+											"type": "text",
+											"enabled": true,
+											"description": "template id"
+										}
+									]
+								},
+								"description": "Delete a Config Template."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Config Template Features",
+					"item": [
+						{
+							"name": "Get the list of features",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/templates/features",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"templates",
+										"features"
+									]
+								},
+								"description": "Get the list of features"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Config Template Apply",
+					"item": [
+						{
+							"name": "Run Config Template Apply",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"systemIds\":[\"cf11b1cda3b9e3ed:94740adcaa114eee\"]}"
+								},
+								"url": {
+									"raw": "https://{{DDMC}}:3009/api/v1/system/config/templates/:template-ID/apply",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"api",
+										"v1",
+										"system",
+										"config",
+										"templates",
+										":template-ID",
+										"apply"
+									],
+									"variable": [
+										{
+											"key": "template-ID",
+											"value": "string",
+											"description": "this is the template ID you need to use "
+										}
+									]
+								},
+								"description": "Run Config Template Apply"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "upgrade schedules",
+					"item": [],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Profile Access Info",
+					"item": [
+						{
+							"name": "Get all profiles on a PowerProtect DD system",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/system/vi/access-info",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"system",
+										"vi",
+										"access-info"
+									]
+								},
+								"description": "Get all profiles on a PowerProtect DD system"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "System Space",
+					"item": [
+						{
+							"name": "Get system space stats",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v2.0/dd-systems/{{System-ID}}/systems/stats/space",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v2.0",
+										"dd-systems",
+										"{{System-ID}}",
+										"systems",
+										"stats",
+										"space"
+									]
+								},
+								"description": "Get system space stats"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Tasks",
+					"item": [
+						{
+							"name": "Get tasks information",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/tasks/:task-id",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"tasks",
+										":task-id"
+									],
+									"variable": [
+										{
+											"key": "task-id",
+											"value": "<string>",
+											"description": "specifiy the task ID"
+										}
+									]
+								},
+								"description": "Get tasks information."
+							},
+							"response": []
+						},
+						{
+							"name": "Get tasks information from response header",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/tasks/:task-id",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"tasks",
+										":task-id"
+									],
+									"variable": [
+										{
+											"key": "task-id",
+											"value": "",
+											"description": "very special task ID"
+										}
+									]
+								},
+								"description": "Get tasks information."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Appliance Pool",
+					"item": [],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "services",
+					"item": [
+						{
+							"name": "Get system services",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v2.0/dd-systems/{{SYSTEM-ID}}/services",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v2.0",
+										"dd-systems",
+										"{{SYSTEM-ID}}",
+										"services"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "ddbost",
+					"item": [
+						{
+							"name": "Get ddboost clients",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/dd-systems/{{SYSTEM-ID}}/protocols/ddboost/clients",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"dd-systems",
+										"{{SYSTEM-ID}}",
+										"protocols",
+										"ddboost",
+										"clients"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get ddboost config",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-dd-auth-token",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									}
+								],
+								"url": {
+									"raw": "https://{{DDMC}}:3009/rest/v1.0/dd-systems/{{SYSTEM-ID}}/protocols/ddboost",
+									"protocol": "https",
+									"host": [
+										"{{DDMC}}"
+									],
+									"port": "3009",
+									"path": [
+										"rest",
+										"v1.0",
+										"dd-systems",
+										"{{SYSTEM-ID}}",
+										"protocols",
+										"ddboost"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
