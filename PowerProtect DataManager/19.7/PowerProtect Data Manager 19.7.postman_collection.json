@@ -91505,6 +91505,151 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code == 200 and Set access_token\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"    var body = pm.response.json();",
+							"    pm.environment.set(\"access_token\", body.access_token);",
+							"    console.log('access_token', pm.environment.get('access_token'));",
+							"    pm.environment.set(\"refresh_token\", body.refresh_token);",
+							"    console.log('refresh_token', pm.environment.get('refresh_token'));",
+							"});",
+							"",
+							"pm.test(\"Response has no error\", function () { ",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"error\"); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{user}}\",\n    \"password\": \"{{pass}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v2//login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "1. Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"{{user}}\",\r\n  \"password\": \"{{pass}}\",\r\n  \"tenant\": \"admin\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base}}/login",
+							"host": [
+								"{{base}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "PUT, POST, GET, OPTIONS, DELETE"
+						},
+						{
+							"key": "Access-Control-Max-Age",
+							"value": "3600"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "x-requested-with"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=0"
+						},
+						{
+							"key": "Content-Security-Policy",
+							"value": "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'self'"
+						},
+						{
+							"key": "X-Application-Context",
+							"value": "edgeserver:eureka,jwt,jjwt:8443"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 23 Jan 2019 04:08:49 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/hal+json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"access_token\": \"eyJraWQiOiIyMTgyMTRiYi1kZDVkLTQ4ZjItYjU4Ni0xODFjODNiZmIxYmYiLCJhbGciOiJFUzI1NiJ9.eyJqdGkiOiJlOGM3OTY5OC1kZmQ5LTRlM2ItYTIzYS1lMGMwYjU1MDY0MGYiLCJpc3MiOiJlQ0RNIEFBQSBTZXJ2aWNlIiwiaWF0IjoxNTQ4MjE2NTI5LCJleHAiOjE1NDgyNDUzMjksImV4dCI6eyJzeXN0ZW0iOnsicm9sZSI6WyJBZG1pbiJdfSwiYXVkaXQiOnsidWlkIjoiMDAwMDAwMDAtMDAwMC00MDAwLWEwMDAtMDAwMDAwMDAwMDAwIn19LCJzdWIiOiJhZG1pbiIsImF1dGhvcml6YXRpb24tdG9rZW4tYml0bWFwIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJhdXRoZW50aWNhdGVkIjp0cnVlLCJpZCI6IjAwMDAwMDAwLTAwMDAtNDAwMC1hMDAwLTAwMDAwMDAwMDAwMCIsInVzZXJUeXBlIjoiTE9DQUwiLCJ0aW1lc3RhbXAiOjAsImNyZWF0aW9uVGltZSI6MCwidGVuYW50U2NvcGUiOiIvMDAwMDAwMDAtMDAwMC00MDAwLWIwMDAtMDAwMDAwMDAwMDAwLzAwMDAwMDAwLTAwMDAtNDAwMC1hMDAwLTAwMDAwMDAwMDAwMCIsImF1dGhvcml0aWVzIjpbeyJ0ZW5hbnRzIjpbIjAwMDAwMDAwLTAwMDAtNDAwMC1iMDAwLTAwMDAwMDAwMDAwMCJdLCJwcml2aWxlZ2VzIjpbIjE3MTc5ODY5MTgzIl0sInJvbGVzIjpbIjJiYzkwMDIwLTc2NzUtMDEzNi0yOWU5LTViYmQzY2U3MjliMCJdfV19LCJydGkiOiJhMDliZGE1Ni1kMmVmLTQ2NDctOTM2Ni00NTc5NzAzOWY2ZDgifQ.R1hIHb1bxA8XvpjbiIREYIjExU72omx1GC2zcl3OE9QUk8xVc71ytgMoEcushfy-toLAWy3eLfH36M5TNj1EAg\",\n    \"token_type\": \"Bearer\",\n    \"expires_in\": 28800,\n    \"jti\": \"e8c79698-dfd9-4e3b-a23a-e0c0b550640f\",\n    \"scope\": \"aaa\",\n    \"refresh_token\": \"eyJraWQiOiIyMTgyMTRiYi1kZDVkLTQ4ZjItYjU4Ni0xODFjODNiZmIxYmYiLCJhbGciOiJFUzI1NiJ9.eyJqdGkiOiJhMDliZGE1Ni1kMmVmLTQ2NDctOTM2Ni00NTc5NzAzOWY2ZDgiLCJpc3MiOiJlQ0RNIEFBQSBTZXJ2aWNlIiwiaWF0IjoxNTQ4MjE2NTI5LCJleHAiOjE1NDgzMDI5MjksInN1YiI6ImFkbWluIiwiYXVkIjoiYWFhLnRva2VuLnJlZnJlc2gifQ.TmgNI9vYy5OlOfmB1KNeHhq4I-kbFw8Oz0yhBWTWVLer-VVP86lq2k0mIby6-AdErmqWyNAAYD3hTZ9enRohMw\"\n}"
+				}
+			]
 		}
 	],
 	"variable": [
