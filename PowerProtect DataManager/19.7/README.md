@@ -12,7 +12,7 @@ Within the URI path you can find ":variable" which you do find in the PArms sect
 
 ## Content
 * PowerProtect Data Manager 19.7    
-		 latest Postman collection and Environment variable for PPDM 19.7.  
+		 latest Postman collection and environment variable for PPDM 19.7.  
 		
 TBD - UseCases. As of today there are no use cases created. Please use the one from PPDM 19.6 as they should work as well
 		 
