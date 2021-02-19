@@ -16,7 +16,7 @@ Download or clone the repo and import PowerProtect 19.5 Environment.postman_envi
         * automation request for PowerProtect
     * PowerProtect 19.6
         * environment variables
-        * automation request for PowerProtect
-     * PowerProtect 19.5
+        * automation request for PowerProtect 
+    * PowerProtect 19.7  
         * environment variables
         * automation request for PowerProtect
