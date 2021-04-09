@@ -54650,6 +54650,1138 @@
 					]
 				},
 				{
+					"name": "Use Case - DD Tenant",
+					"item": [
+						{
+							"name": "Create authentication token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"tests[\"response code is 201\"] = responseCode.code === 201;\r",
+											"\r",
+											"//console.log(\"Comming form Tests scripting\")\r",
+											"//console.log(\"The whole response body:...\" +responseBody)\r",
+											"\r",
+											"pm.environment.set(\"X-DD-AUTH-TOKEN\",postman.getResponseHeader(\"X-DD-AUTH-TOKEN\") );\r",
+											"pm.environment.set(\"X-DD-UUID\",postman.getResponseHeader(\"X-DD-UUID\") );"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"sysadmin\",\n    \"password\": \"Password123!\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/rest/v1.0/auth",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1.0",
+										"auth"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Status",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/auth",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"auth"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"details\": \"cill\",\n \"code\": 55376110,\n \"node_service_status\": [\n  {\n   \"hostname\": \"Duis laboris ipsum\",\n   \"details\": \"et\",\n   \"code\": -3847849\n  },\n  {\n   \"hostname\": \"eiusmod in\",\n   \"details\": \"ipsum id ad\",\n   \"code\": 24977540\n  }\n ],\n \"link\": [\n  {\n   \"rel\": \"tempor Ut ex Excepteur sunt\",\n   \"title\": \"aliquip au\",\n   \"href\": \"ad quis sunt ex\"\n  },\n  {\n   \"rel\": \"sunt irure fugiat quis\",\n   \"title\": \"proident non cupidatat labore\",\n   \"href\": \"mollit in\"\n  }\n ]\n}"
+								},
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"username\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/auth",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"auth"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DD-AUTH-TOKEN",
+											"value": "ea laborum elit laboris Ut",
+											"description": "Authentication Token"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"details\": \"cill\",\n \"code\": 55376110,\n \"node_service_status\": [\n  {\n   \"hostname\": \"Duis laboris ipsum\",\n   \"details\": \"et\",\n   \"code\": -3847849\n  },\n  {\n   \"hostname\": \"eiusmod in\",\n   \"details\": \"ipsum id ad\",\n   \"code\": 24977540\n  }\n ],\n \"link\": [\n  {\n   \"rel\": \"tempor Ut ex Excepteur sunt\",\n   \"title\": \"aliquip au\",\n   \"href\": \"ad quis sunt ex\"\n  },\n  {\n   \"rel\": \"sunt irure fugiat quis\",\n   \"title\": \"proident non cupidatat labore\",\n   \"href\": \"mollit in\"\n  }\n ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Get tenant information",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{X-DD-AUTH-TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+										"key": "Authorization",
+										"value": "<string>",
+										"disabled": true
+									},
+									{
+										"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+										"key": "X-DD-AUTH-TOKEN",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/smt/tenants",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1.0",
+										"dd-systems",
+										":SYSTEM-ID",
+										"smt",
+										"tenants"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>",
+											"description": "page number, starting from 0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "<integer>",
+											"description": "Paging size",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "<string>",
+											"description": "sort=\"name,role\". For descending order, prefix the key with a dash (-). Ex: -name",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "<string>",
+											"description": "filter=\"name=value and role=value\". value should be a valid regular expression.",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "<string>",
+											"description": "Comma separated list of fields to be excluded from response object. Required and general fields such as paging will not be excluded. For example, \"msg, status,severity\" for an alert.",
+											"disabled": true
+										},
+										{
+											"key": "include_fields",
+											"value": "<string>",
+											"description": "Comma separated list of fields to be included in response object. For example, \"msg, status,severity\" for an alert.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "SYSTEM-ID",
+											"value": "0",
+											"type": "string",
+											"description": "(Required) DD system identifier."
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Status",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "Authorization",
+												"value": "<string>"
+											},
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "X-DD-AUTH-TOKEN",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/users?page=<integer>&size=<integer>&sort=<string>&filter=<string>&exclude_fields=<string>&include_fields=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems",
+												":SYSTEM-ID",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "<integer>"
+												},
+												{
+													"key": "size",
+													"value": "<integer>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "filter",
+													"value": "<string>"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "<string>"
+												},
+												{
+													"key": "include_fields",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "SYSTEM-ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"details\": \"cill\",\n \"code\": 55376110,\n \"node_service_status\": [\n  {\n   \"hostname\": \"Duis laboris ipsum\",\n   \"details\": \"et\",\n   \"code\": -3847849\n  },\n  {\n   \"hostname\": \"eiusmod in\",\n   \"details\": \"ipsum id ad\",\n   \"code\": 24977540\n  }\n ],\n \"link\": [\n  {\n   \"rel\": \"tempor Ut ex Excepteur sunt\",\n   \"title\": \"aliquip au\",\n   \"href\": \"ad quis sunt ex\"\n  },\n  {\n   \"rel\": \"sunt irure fugiat quis\",\n   \"title\": \"proident non cupidatat labore\",\n   \"href\": \"mollit in\"\n  }\n ]\n}"
+								},
+								{
+									"name": "List of user information.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "Authorization",
+												"value": "<string>"
+											},
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "X-DD-AUTH-TOKEN",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/users?page=<integer>&size=<integer>&sort=<string>&filter=<string>&exclude_fields=<string>&include_fields=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems",
+												":SYSTEM-ID",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "<integer>"
+												},
+												{
+													"key": "size",
+													"value": "<integer>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "filter",
+													"value": "<string>"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "<string>"
+												},
+												{
+													"key": "include_fields",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "SYSTEM-ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DD-AUTH-TOKEN",
+											"value": "ea laborum elit laboris Ut",
+											"description": "Authentication Token"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"user\": [\n  {\n   \"id\": \"in id ea fugiat\",\n   \"name\": \"ea deserunt\",\n   \"uid\": 77135099,\n   \"role\": \"id adipisicing commodo\",\n   \"status\": \"locked\",\n   \"link\": {\n    \"rel\": \"eiusmod\",\n    \"title\": \"ad\",\n    \"href\": \"sed sint Duis reprehenderit dolor\"\n   }\n  },\n  {\n   \"id\": \"eu aliqua\",\n   \"name\": \"laboris\",\n   \"uid\": 54815882,\n   \"role\": \"eiusmod pariatur Duis nisi\",\n   \"status\": \"locked\",\n   \"link\": {\n    \"rel\": \"Excepteur laboris irure aliquip Ut\",\n    \"title\": \"ad est Excepteur\",\n    \"href\": \"sed\"\n   }\n  }\n ],\n \"paging_info\": {\n  \"current_page\": 33507360,\n  \"page_entries\": 35912310,\n  \"total_entries\": 77496252,\n  \"page_size\": 17440345,\n  \"page_links\": [\n   {\n    \"rel\": \"commodo voluptate incididunt dolore\",\n    \"title\": \"velit eiusmod occaecat\",\n    \"href\": \"non ex ut\"\n   },\n   {\n    \"rel\": \"consectetur laboris\",\n    \"title\": \"eiusmod adipisicing quis ci\",\n    \"href\": \"aliquip nulla\"\n   }\n  ]\n }\n}"
+								}
+							]
+						},
+						{
+							"name": "Create tenant",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{X-DD-AUTH-TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+										"key": "Authorization",
+										"value": "<string>",
+										"disabled": true
+									},
+									{
+										"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+										"key": "X-DD-AUTH-TOKEN",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Postman\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/smt/tenants",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1.0",
+										"dd-systems",
+										":SYSTEM-ID",
+										"smt",
+										"tenants"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>",
+											"description": "page number, starting from 0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "<integer>",
+											"description": "Paging size",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "<string>",
+											"description": "sort=\"name,role\". For descending order, prefix the key with a dash (-). Ex: -name",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "<string>",
+											"description": "filter=\"name=value and role=value\". value should be a valid regular expression.",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "<string>",
+											"description": "Comma separated list of fields to be excluded from response object. Required and general fields such as paging will not be excluded. For example, \"msg, status,severity\" for an alert.",
+											"disabled": true
+										},
+										{
+											"key": "include_fields",
+											"value": "<string>",
+											"description": "Comma separated list of fields to be included in response object. For example, \"msg, status,severity\" for an alert.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "SYSTEM-ID",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "List of user information.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "Authorization",
+												"value": "<string>"
+											},
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "X-DD-AUTH-TOKEN",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/users?page=<integer>&size=<integer>&sort=<string>&filter=<string>&exclude_fields=<string>&include_fields=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems",
+												":SYSTEM-ID",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "<integer>"
+												},
+												{
+													"key": "size",
+													"value": "<integer>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "filter",
+													"value": "<string>"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "<string>"
+												},
+												{
+													"key": "include_fields",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "SYSTEM-ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DD-AUTH-TOKEN",
+											"value": "ea laborum elit laboris Ut",
+											"description": "Authentication Token"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"user\": [\n  {\n   \"id\": \"in id ea fugiat\",\n   \"name\": \"ea deserunt\",\n   \"uid\": 77135099,\n   \"role\": \"id adipisicing commodo\",\n   \"status\": \"locked\",\n   \"link\": {\n    \"rel\": \"eiusmod\",\n    \"title\": \"ad\",\n    \"href\": \"sed sint Duis reprehenderit dolor\"\n   }\n  },\n  {\n   \"id\": \"eu aliqua\",\n   \"name\": \"laboris\",\n   \"uid\": 54815882,\n   \"role\": \"eiusmod pariatur Duis nisi\",\n   \"status\": \"locked\",\n   \"link\": {\n    \"rel\": \"Excepteur laboris irure aliquip Ut\",\n    \"title\": \"ad est Excepteur\",\n    \"href\": \"sed\"\n   }\n  }\n ],\n \"paging_info\": {\n  \"current_page\": 33507360,\n  \"page_entries\": 35912310,\n  \"total_entries\": 77496252,\n  \"page_size\": 17440345,\n  \"page_links\": [\n   {\n    \"rel\": \"commodo voluptate incididunt dolore\",\n    \"title\": \"velit eiusmod occaecat\",\n    \"href\": \"non ex ut\"\n   },\n   {\n    \"rel\": \"consectetur laboris\",\n    \"title\": \"eiusmod adipisicing quis ci\",\n    \"href\": \"aliquip nulla\"\n   }\n  ]\n }\n}"
+								},
+								{
+									"name": "Status",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "Authorization",
+												"value": "<string>"
+											},
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "X-DD-AUTH-TOKEN",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/users?page=<integer>&size=<integer>&sort=<string>&filter=<string>&exclude_fields=<string>&include_fields=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems",
+												":SYSTEM-ID",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "<integer>"
+												},
+												{
+													"key": "size",
+													"value": "<integer>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "filter",
+													"value": "<string>"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "<string>"
+												},
+												{
+													"key": "include_fields",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "SYSTEM-ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"details\": \"cill\",\n \"code\": 55376110,\n \"node_service_status\": [\n  {\n   \"hostname\": \"Duis laboris ipsum\",\n   \"details\": \"et\",\n   \"code\": -3847849\n  },\n  {\n   \"hostname\": \"eiusmod in\",\n   \"details\": \"ipsum id ad\",\n   \"code\": 24977540\n  }\n ],\n \"link\": [\n  {\n   \"rel\": \"tempor Ut ex Excepteur sunt\",\n   \"title\": \"aliquip au\",\n   \"href\": \"ad quis sunt ex\"\n  },\n  {\n   \"rel\": \"sunt irure fugiat quis\",\n   \"title\": \"proident non cupidatat labore\",\n   \"href\": \"mollit in\"\n  }\n ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Modify tenant information",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{X-DD-AUTH-TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+										"key": "Authorization",
+										"value": "<string>",
+										"disabled": true
+									},
+									{
+										"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+										"key": "X-DD-AUTH-TOKEN",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"operation\": \"rename\",\n  \"name\": \"NewName\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/smt/tenants/:ID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1.0",
+										"dd-systems",
+										":SYSTEM-ID",
+										"smt",
+										"tenants",
+										":ID"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>",
+											"description": "page number, starting from 0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "<integer>",
+											"description": "Paging size",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "<string>",
+											"description": "sort=\"name,role\". For descending order, prefix the key with a dash (-). Ex: -name",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "<string>",
+											"description": "filter=\"name=value and role=value\". value should be a valid regular expression.",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "<string>",
+											"description": "Comma separated list of fields to be excluded from response object. Required and general fields such as paging will not be excluded. For example, \"msg, status,severity\" for an alert.",
+											"disabled": true
+										},
+										{
+											"key": "include_fields",
+											"value": "<string>",
+											"description": "Comma separated list of fields to be included in response object. For example, \"msg, status,severity\" for an alert.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "SYSTEM-ID",
+											"value": "0",
+											"type": "string",
+											"description": "(Required) DD system identifier."
+										},
+										{
+											"key": "ID",
+											"value": "Postman"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Status",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "Authorization",
+												"value": "<string>"
+											},
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "X-DD-AUTH-TOKEN",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/users?page=<integer>&size=<integer>&sort=<string>&filter=<string>&exclude_fields=<string>&include_fields=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems",
+												":SYSTEM-ID",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "<integer>"
+												},
+												{
+													"key": "size",
+													"value": "<integer>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "filter",
+													"value": "<string>"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "<string>"
+												},
+												{
+													"key": "include_fields",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "SYSTEM-ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"details\": \"cill\",\n \"code\": 55376110,\n \"node_service_status\": [\n  {\n   \"hostname\": \"Duis laboris ipsum\",\n   \"details\": \"et\",\n   \"code\": -3847849\n  },\n  {\n   \"hostname\": \"eiusmod in\",\n   \"details\": \"ipsum id ad\",\n   \"code\": 24977540\n  }\n ],\n \"link\": [\n  {\n   \"rel\": \"tempor Ut ex Excepteur sunt\",\n   \"title\": \"aliquip au\",\n   \"href\": \"ad quis sunt ex\"\n  },\n  {\n   \"rel\": \"sunt irure fugiat quis\",\n   \"title\": \"proident non cupidatat labore\",\n   \"href\": \"mollit in\"\n  }\n ]\n}"
+								},
+								{
+									"name": "List of user information.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "Authorization",
+												"value": "<string>"
+											},
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "X-DD-AUTH-TOKEN",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/users?page=<integer>&size=<integer>&sort=<string>&filter=<string>&exclude_fields=<string>&include_fields=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems",
+												":SYSTEM-ID",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "<integer>"
+												},
+												{
+													"key": "size",
+													"value": "<integer>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "filter",
+													"value": "<string>"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "<string>"
+												},
+												{
+													"key": "include_fields",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "SYSTEM-ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DD-AUTH-TOKEN",
+											"value": "ea laborum elit laboris Ut",
+											"description": "Authentication Token"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"user\": [\n  {\n   \"id\": \"in id ea fugiat\",\n   \"name\": \"ea deserunt\",\n   \"uid\": 77135099,\n   \"role\": \"id adipisicing commodo\",\n   \"status\": \"locked\",\n   \"link\": {\n    \"rel\": \"eiusmod\",\n    \"title\": \"ad\",\n    \"href\": \"sed sint Duis reprehenderit dolor\"\n   }\n  },\n  {\n   \"id\": \"eu aliqua\",\n   \"name\": \"laboris\",\n   \"uid\": 54815882,\n   \"role\": \"eiusmod pariatur Duis nisi\",\n   \"status\": \"locked\",\n   \"link\": {\n    \"rel\": \"Excepteur laboris irure aliquip Ut\",\n    \"title\": \"ad est Excepteur\",\n    \"href\": \"sed\"\n   }\n  }\n ],\n \"paging_info\": {\n  \"current_page\": 33507360,\n  \"page_entries\": 35912310,\n  \"total_entries\": 77496252,\n  \"page_size\": 17440345,\n  \"page_links\": [\n   {\n    \"rel\": \"commodo voluptate incididunt dolore\",\n    \"title\": \"velit eiusmod occaecat\",\n    \"href\": \"non ex ut\"\n   },\n   {\n    \"rel\": \"consectetur laboris\",\n    \"title\": \"eiusmod adipisicing quis ci\",\n    \"href\": \"aliquip nulla\"\n   }\n  ]\n }\n}"
+								}
+							]
+						},
+						{
+							"name": "Delete user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{X-DD-AUTH-TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+										"key": "Authorization",
+										"value": "<string>",
+										"disabled": true
+									},
+									{
+										"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+										"key": "X-DD-AUTH-TOKEN",
+										"value": "{{X-DD-AUTH-TOKEN}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"string\",\n  \"role\": \"none\",\n  \"password\": \"string\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID//smt/tenants/:ID",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"rest",
+										"v1.0",
+										"dd-systems",
+										":SYSTEM-ID",
+										"",
+										"smt",
+										"tenants",
+										":ID"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "<integer>",
+											"description": "page number, starting from 0",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "<integer>",
+											"description": "Paging size",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "<string>",
+											"description": "sort=\"name,role\". For descending order, prefix the key with a dash (-). Ex: -name",
+											"disabled": true
+										},
+										{
+											"key": "filter",
+											"value": "<string>",
+											"description": "filter=\"name=value and role=value\". value should be a valid regular expression.",
+											"disabled": true
+										},
+										{
+											"key": "exclude_fields",
+											"value": "<string>",
+											"description": "Comma separated list of fields to be excluded from response object. Required and general fields such as paging will not be excluded. For example, \"msg, status,severity\" for an alert.",
+											"disabled": true
+										},
+										{
+											"key": "include_fields",
+											"value": "<string>",
+											"description": "Comma separated list of fields to be included in response object. For example, \"msg, status,severity\" for an alert.",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "SYSTEM-ID",
+											"value": "0"
+										},
+										{
+											"key": "ID",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Status",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "Authorization",
+												"value": "<string>"
+											},
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "X-DD-AUTH-TOKEN",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/users?page=<integer>&size=<integer>&sort=<string>&filter=<string>&exclude_fields=<string>&include_fields=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems",
+												":SYSTEM-ID",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "<integer>"
+												},
+												{
+													"key": "size",
+													"value": "<integer>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "filter",
+													"value": "<string>"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "<string>"
+												},
+												{
+													"key": "include_fields",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "SYSTEM-ID"
+												}
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"details\": \"cill\",\n \"code\": 55376110,\n \"node_service_status\": [\n  {\n   \"hostname\": \"Duis laboris ipsum\",\n   \"details\": \"et\",\n   \"code\": -3847849\n  },\n  {\n   \"hostname\": \"eiusmod in\",\n   \"details\": \"ipsum id ad\",\n   \"code\": 24977540\n  }\n ],\n \"link\": [\n  {\n   \"rel\": \"tempor Ut ex Excepteur sunt\",\n   \"title\": \"aliquip au\",\n   \"href\": \"ad quis sunt ex\"\n  },\n  {\n   \"rel\": \"sunt irure fugiat quis\",\n   \"title\": \"proident non cupidatat labore\",\n   \"href\": \"mollit in\"\n  }\n ]\n}"
+								},
+								{
+									"name": "List of user information.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "Authorization",
+												"value": "<string>"
+											},
+											{
+												"description": "Clients need to specify Authorization or X-DD-AUTH-TOKEN.",
+												"key": "X-DD-AUTH-TOKEN",
+												"value": "<string>"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/rest/v1.0/dd-systems/:SYSTEM-ID/users?page=<integer>&size=<integer>&sort=<string>&filter=<string>&exclude_fields=<string>&include_fields=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"rest",
+												"v1.0",
+												"dd-systems",
+												":SYSTEM-ID",
+												"users"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "<integer>"
+												},
+												{
+													"key": "size",
+													"value": "<integer>"
+												},
+												{
+													"key": "sort",
+													"value": "<string>"
+												},
+												{
+													"key": "filter",
+													"value": "<string>"
+												},
+												{
+													"key": "exclude_fields",
+													"value": "<string>"
+												},
+												{
+													"key": "include_fields",
+													"value": "<string>"
+												}
+											],
+											"variable": [
+												{
+													"key": "SYSTEM-ID"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-DD-AUTH-TOKEN",
+											"value": "ea laborum elit laboris Ut",
+											"description": "Authentication Token"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"user\": [\n  {\n   \"id\": \"in id ea fugiat\",\n   \"name\": \"ea deserunt\",\n   \"uid\": 77135099,\n   \"role\": \"id adipisicing commodo\",\n   \"status\": \"locked\",\n   \"link\": {\n    \"rel\": \"eiusmod\",\n    \"title\": \"ad\",\n    \"href\": \"sed sint Duis reprehenderit dolor\"\n   }\n  },\n  {\n   \"id\": \"eu aliqua\",\n   \"name\": \"laboris\",\n   \"uid\": 54815882,\n   \"role\": \"eiusmod pariatur Duis nisi\",\n   \"status\": \"locked\",\n   \"link\": {\n    \"rel\": \"Excepteur laboris irure aliquip Ut\",\n    \"title\": \"ad est Excepteur\",\n    \"href\": \"sed\"\n   }\n  }\n ],\n \"paging_info\": {\n  \"current_page\": 33507360,\n  \"page_entries\": 35912310,\n  \"total_entries\": 77496252,\n  \"page_size\": 17440345,\n  \"page_links\": [\n   {\n    \"rel\": \"commodo voluptate incididunt dolore\",\n    \"title\": \"velit eiusmod occaecat\",\n    \"href\": \"non ex ut\"\n   },\n   {\n    \"rel\": \"consectetur laboris\",\n    \"title\": \"eiusmod adipisicing quis ci\",\n    \"href\": \"aliquip nulla\"\n   }\n  ]\n }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
 					"name": "Use Case - DD available mtree",
 					"item": [
 						{
