@@ -1,0 +1,630 @@
+{
+	"info": {
+		"_postman_id": "9e48902c-1542-49b9-a49e-617b23805c5a",
+		"name": "CSM-Cloud Snapshot Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Authentication. https://console.dell.com/accounts/10002/iam/credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});    ",
+									"    pm.environment.unset(\"access_token\");",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+									"",
+									"",
+									"//console.log(\"Comming form Tests scripting\")",
+									"//console.log(\"The whole response body:...\" +responseBody)",
+									"",
+									"//pm.environment.set(\"access_token\",postman.getResponseBody(\"access_token\") );",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "cache-control",
+								"value": "no-cache"
+							},
+							{
+								"key": "content-type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{APIKey}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{KeySecret}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://ssgosge.emc.com/external/auth/oauth/v2/token",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"external",
+								"auth",
+								"oauth",
+								"v2",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CloudAccount",
+			"item": [
+				{
+					"name": "Lists Cloud Provider Accounts under a Tenant",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v1/cloud_accounts",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v1",
+								"cloud_accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create  Cloud Provider Accounts under a Tenant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"display_name\": \"string\",\n  \"description\": \"string\",\n  \"cloud_provider\": \"aws\",\n  \"access_key_id\": \"string\",\n  \"secret_access_key\": \"string\",\n  \"role_arn\": \"string\",\n  \"external_id\": \"string\",\n  \"subscription_id\": \"string\",\n  \"active_directory_id\": \"string\",\n  \"application_id\": \"string\",\n  \"auth_key\": \"string\",\n  \"type\": \"regular\",\n  \"expire_snapshot\": true\n}\n"
+						},
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v1/cloud_accounts",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v1",
+								"cloud_accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my AWS Cloud account",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v1/cloud_accounts/{{AwsAccountID}}",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v1",
+								"cloud_accounts",
+								"{{AwsAccountID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Snapshots",
+			"item": [
+				{
+					"name": "Get Snapshots",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v1/snapshots?cloud_account_id={{AwsAccountID}}",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v1",
+								"snapshots"
+							],
+							"query": [
+								{
+									"key": "cloud_account_id",
+									"value": "{{AwsAccountID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Snapshots a Ressource",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"cloud_account_id\": \"{{AwsAccountID}}\",\n  \"region_id\": \"eu-central-1\",\n  \"resource_id\": \"{{AwsResourceID_forSnapshot}}\",\n  \"resource_type\": \"vm\",\n  \"resource_group_id\": \"string\",\n  \"scripts\": {\n    \"aws\": {\n      \"timeout\": 300,\n      \"pre_script\": \"string\",\n      \"post_script\": \"string\"\n    },\n    \"azure\": {\n      \"timeout\": 300,\n      \"pre_script\": \"string\",\n      \"post_script\": \"string\"\n    }\n  },\n  \"vss_enabled\": false,\n  \"retention\": {{CSMRetentionTimeInSeconds}}\n}"
+						},
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v1/snapshots?cloud_account_id={{AwsAccountID}}",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v1",
+								"snapshots"
+							],
+							"query": [
+								{
+									"key": "cloud_account_id",
+									"value": "{{AwsAccountID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Snapshots AWS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v1/snapshots?cloud_account_id={{AwsAccountID}}&created_time_from=1618283401846",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v1",
+								"snapshots"
+							],
+							"query": [
+								{
+									"key": "cloud_account_id",
+									"value": "{{AwsAccountID}}"
+								},
+								{
+									"key": "region_id",
+									"value": "eu-central-1",
+									"disabled": true
+								},
+								{
+									"key": "resource_group_id",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "resource_id",
+									"value": "i-06784752df620ea20",
+									"disabled": true
+								},
+								{
+									"key": "resource_type",
+									"value": "vm",
+									"disabled": true
+								},
+								{
+									"key": "created_time_from",
+									"value": "1618283401846"
+								},
+								{
+									"key": "created_time_to",
+									"value": "1618283401846",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a indiviadual Snapshot",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v1/snapshots/:snapshot_id",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v1",
+								"snapshots",
+								":snapshot_id"
+							],
+							"variable": [
+								{
+									"key": "snapshot_id",
+									"value": "99cf60bf-230a-497f-9118-62dd25b41295"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Protection Plan",
+			"item": [
+				{
+					"name": "List of protection plans",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"disabled": true
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v2/plans?cloud_account_id={{AwsAccountID}}",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v2",
+								"plans"
+							],
+							"query": [
+								{
+									"key": "cloud_account_id",
+									"value": "{{AwsAccountID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Policies",
+			"item": [
+				{
+					"name": "Lists schedule policies",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v2/policies",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v2",
+								"policies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "a polciy schedue Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{access_token}}",
+								"disabled": true
+							},
+							{
+								"key": "cache-control",
+								"value": "no-cache"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://ssgosge.emc.com/csm/v2/policies/:id",
+							"protocol": "https",
+							"host": [
+								"ssgosge",
+								"emc",
+								"com"
+							],
+							"path": [
+								"csm",
+								"v2",
+								"policies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "492a5706-dc34-4f35-9244-2246c701ce7b"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
