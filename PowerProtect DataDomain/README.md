@@ -11,3 +11,7 @@ If you download individual files make sure you really downloaded the json file a
   * DDOS 6.2
   * DDOS 7.3
   * DDOS 7.4
+  * DDOS 7.9
+  		* DD ReST api Postman Collection
+  		* DD ReST Use Case Postman Collection
+  		* Postman Enviroment 	
