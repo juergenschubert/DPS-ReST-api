@@ -3,20 +3,29 @@ Download or clone the repo and import PowerProtect 19.5 Environment.postman_envi
 
 # Content
 * PowerProtect
-    * PowerProtect 19.1
+   * PowerProtect 19.1
 	* there was no REST API available with 19.1
-    * PowerProtect 19.2
+    * **PowerProtect 19.2**
         * environment variables
         * automation request for PowerProtect
-    * PowerProtect 19.3
+    * **PowerProtect 19.3**
         * environment variables
         * automation request for PowerProtect
     * PowerProtect 19.5
         * environment variables
         * automation request for PowerProtect
-    * PowerProtect 19.6
+    * **PowerProtect 19.6**
         * environment variables
         * automation request for PowerProtect 
-    * PowerProtect 19.7  
+    * **PowerProtect 19.7**  
+        * environment variables
+        * automation request for PowerProtect 
+    * **PowerProtect 19.8**
+        * environment variables
+        * automation request for PowerProtect
+    * **PowerProtect 19.9**
+        * environment variables
+        * automation request for PowerProtect
+    * **PowerProtect 19.11**
         * environment variables
         * automation request for PowerProtect
